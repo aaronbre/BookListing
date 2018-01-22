@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginEnd="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/details_image"
+            android:layout_width="150dp"
+            android:layout_height="250dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="36dp"
+            android:scaleType="fitXY"
+            tools:src="@drawable/book_graphic" />
+
+        <TextView
+            android:id="@+id/details_main_heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/base_padding"
+            android:textSize="@dimen/main_header"
+            tools:text="The Force Awakens" />
+
+        <TextView
+            android:id="@+id/details_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/small_margin"
+            android:textAllCaps="true"
+            android:textSize="@dimen/book_author_size"
+            tools:text="George Lucus" />
+
+        <TextView
+            android:id="@+id/details_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/base_padding"
+            android:lineSpacingExtra="8sp"
+            android:textSize="@dimen/book_author_size"
+            tools:text="NEW YORK TIMES BESTSELLER • Experience Star Wars: A New Hope from a whole new point of view. On May 25, 1977, the world was introduced to Han Solo, Luke Skywalker, Princess Leia, C-3PO, R2-D2, Chewbacca, Obi-Wan Kenobi, Darth Vader, and a galaxy full of possibilities. In honor of the fortieth anniversary, more than forty contributors lend their vision to this retelling of Star Wars. Each of the forty short stories reimagines a moment from the original film, but through the eyes of a supporting character. From a Certain Point of View features contributions by bestselling authors, trendsetting artists, and treasured voices from the literary history of Star Wars: • Gary Whitta bridges the gap from Rogue One to A New Hope through the eyes of Captain Antilles. • Aunt Beru finds her voice in an intimate character study by Meg Cabot. • Nnedi Okorofor brings dignity and depth to a most unlikely character: the monster in the trash compactor. • Pablo Hidalgo provides a chilling glimpse inside the mind of Grand Moff Tarkin. • Pierce Brown chronicles Biggs Darklighter’s final flight during the Rebellion’s harrowing attack on the Death Star. • Wil Wheaton spins a poignant tale of the rebels left behind on Yavin. Plus thirty-four more hilarious, heartbreaking, and astonishing tales from: Ben Acker • Renée Ahdieh • Tom Angleberger • Ben Blacker • Jeffrey Brown • Rae Carson • Adam Christopher • Zoraida Córdova • Delilah S. Dawson • Kelly Sue DeConnick • Paul Dini • Ian Doescher • Ashley Eckstein • Matt Fraction • Alexander Freed • Jason Fry • Kieron Gillen • Christie Golden • Claudia Gray • E. K. Johnston • Paul S. Kemp • Mur Lafferty • Ken Liu • Griffin McElroy • John Jackson Miller • Daniel José Older • Mallory Ortberg • Beth Revis • Madeleine Roux • Greg Rucka • Gary D. Schmidt • Cavan Scott • Charles Soule • Sabaa Tahir • Elizabeth Wein • Glen Weldon • Chuck Wendig All participating authors have generously forgone any compensation for their stories. Instead, their proceeds will be donated to First Book—a leading nonprofit that provides new books, learning materials, and other essentials to educators and organizations serving children in need. To further celebrate the launch of this book and both companies’ longstanding relationships with First Book, Penguin Random House has donated $100,000 to First Book, and Disney/Lucasfilm has donated 100,000 children’s books—valued at $1,000,000—to support First Book and their mission of providing equal access to quality education. Over the past sixteen years, Disney and Penguin Random House combined have donated more than eighty-eight million books to First Book." />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/base_padding">
+
+            <TextView
+                android:id="@+id/details_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginStart="@dimen/base_padding"
+                tools:text="$9.99" />
+
+            <Button
+                android:id="@+id/details_buy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginEnd="@dimen/base_padding"
+                android:background="@color/colorPrimary"
+                android:padding="@dimen/base_padding"
+                android:textColor="#ffffff"
+                android:text="Purchase"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
+

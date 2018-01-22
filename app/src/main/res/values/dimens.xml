@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="base_padding">16dp</dimen>
+    <dimen name="small_margin">8dp</dimen>
+    <dimen name="main_header">24sp</dimen>
+    <dimen name="book_title_size">16sp</dimen>
+    <dimen name="book_author_size">12sp</dimen>
+</resources>

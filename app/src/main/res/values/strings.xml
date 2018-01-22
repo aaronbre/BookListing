@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Book List</string>
+    <string name="results_page">Search Results</string>
+    <string name="main_header">Search the largest online book database</string>
+    <string name="search_prompt">Enter a search term to find books</string>
+    <string name="search_button">Search Books</string>
+    <string name="price_not_found">Price not found</string>
+</resources>
