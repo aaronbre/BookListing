@@ -15,6 +15,7 @@
         <activity android:name=".BookSearch">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -22,11 +23,16 @@
             android:name=".ResultsActivity"
             android:label="@string/results_page"
             android:launchMode="singleTop"
-            android:parentActivityName=".BookSearch"></activity>
+            android:parentActivityName=".BookSearch" />
         <activity
             android:name=".BookDetailsActivity"
             android:label="Book Details"
-            android:parentActivityName=".ResultsActivity"></activity>
+            android:parentActivityName=".ResultsActivity" />
+        <activity
+            android:name=".SettingsActivity"
+            android:label="Settings">
+
+        </activity>
     </application>
 
 </manifest>
