@@ -1,5 +1,8 @@
 package com.example.aaronbrecher.booklisting;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -28,7 +31,7 @@ public class Utils {
     public Utils() {
     }
 
-    public static List<Book> fetchBooks(String urlString){
+    public static List<Book> fetchBooks(String urlString, Context context){
         URL url = createUrl(urlString);
         String jsonResponse = "";
         try {
@@ -36,7 +39,7 @@ public class Utils {
         }catch (IOException e){
             Log.e(TAG, "fetchBooks: Failed with IOException",e);
         }
-        return extractJson(jsonResponse);
+        return extractJson(jsonResponse, context);
     }
 
     /**
@@ -124,19 +127,23 @@ public class Utils {
      * @param json
      * @return
      */
-    private static List<Book> extractJson(String json){
+    private static List<Book> extractJson(String json, Context context){
         ArrayList<Book> books = new ArrayList<>();
         if (json == null || json == ""){
             return books;
         }
         try {
-            //creat variables to set up the Book object
-            String title = NOT_FOUND;
-            String author = NOT_FOUND;
-            String category = NOT_FOUND;
-            String description = NOT_FOUND;
+            //create variables to set up the Book object
+            String title = "Title " + NOT_FOUND;
+            String author = "Author " +NOT_FOUND;
+            String category = "Category " + NOT_FOUND;
+            String description = "Description" + NOT_FOUND;
             Double price = null;
+            boolean isPurchaseable = false;
             String image;
+            // get the shared prefrences to check if only priced items should be shown
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+            boolean onlyPurchaseable = prefs.getBoolean(context.getString(R.string.settings_purchaseable_key), false);
             //traverse the JSON and get all the elements to add to Book object
             JSONObject root = new JSONObject(json);
             JSONArray bookList = root.getJSONArray("items");
@@ -144,20 +151,29 @@ public class Utils {
                 JSONObject currentBook = bookList.getJSONObject(i);
                 //get object which will be the root of all the book details
                 JSONObject bookDetails = currentBook.getJSONObject("volumeInfo");
+                //every book must have a title
                 title = bookDetails.getString("title");
-                //truncates multiple authors to the first one
+                //check for and add authors truncates multiple authors to the first one
                 if(bookDetails.has("authors")) author = bookDetails.getJSONArray("authors").getString(0);
-                //get the category if no category set to fiction (won't work for everything just a start)
+                //check for and add description
                 if (bookDetails.has("description")) description = bookDetails.getString("description");
-                category = bookDetails.has("categories") ? bookDetails.getJSONArray("categories").getString(0) : "Fiction";
+                //check for and add category
+                if (bookDetails.has("categories")) category = bookDetails.getJSONArray("categories").getString(0);
                 //get an image from the object if no image set to null
                 image = bookDetails.has("imageLinks") ? bookDetails.getJSONObject("imageLinks").getString("smallThumbnail") : null;
+
                 //check if the object has sale info if so set price to the listPrice null if no SalesInfo
                 if(currentBook.has("saleInfo")){
                     JSONObject saleDetails = currentBook.getJSONObject("saleInfo");
-                    if (saleDetails.has("listPrice")) price = saleDetails.getJSONObject("listPrice").getDouble("amount");
+                    if (saleDetails.has("listPrice")){
+                        price = saleDetails.getJSONObject("listPrice").getDouble("amount");
+                        isPurchaseable = true;
+                    }
                 }
-                books.add(new Book(title,author, description, category, price, image));
+                //check if only purchaseable items should be added if so make sure is purchaseable
+                if ((onlyPurchaseable && isPurchaseable) || !onlyPurchaseable){
+                    books.add(new Book(title,author, description, category, price, image));
+                }
             }
         }catch (JSONException e){
             Log.e(TAG, "extractJson: not Succesfull invalid JSON somewhere",e);

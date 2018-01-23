@@ -31,6 +31,6 @@ public class BooksLoader extends AsyncTaskLoader <List<Book>>{
         if(mUrl == null || mUrl == ""){
             return null;
         }
-        return Utils.fetchBooks(mUrl);
+        return Utils.fetchBooks(mUrl, getContext());
     }
 }
