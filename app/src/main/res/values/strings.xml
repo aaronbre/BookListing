@@ -7,4 +7,10 @@
     <string name="price_not_found">Price not found</string>
     <string name="settings_menu_item">Settings</string>
     <string name="settings_title">Book Listing Settings</string>
+    
+    <string name="settings_book_limit_label">Maximum Books</string>
+    <string name="settings_book_limit_key" translatable="false">max books</string>
+    <string name="settings_book_limit_default" translatable="false">20</string>
+    <string name="settings_purchaseable_only_label">Only include purchaseable books</string>
+    <string name="settings_purchaseable_key">purchaseable</string>
 </resources>

@@ -3,10 +3,14 @@ package com.example.aaronbrecher.booklisting;
 import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,21 +21,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ResultsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Book>> {
-    private String mUrl = null;
+    private String mSearchParam;
     private BookArrayAdapter mBookArrayAdapter;
     private ListView mBookListView;
 
-    private final String API_URL = "https://www.googleapis.com/books/v1/volumes?q=";
+    private final String API_URL = "https://www.googleapis.com/books/v1/volumes?";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
 
-        //get the searchParams to add to the api url
-        if (mUrl == null){
-            mUrl = API_URL + getIntent().getStringExtra("searchParam")+"&maxResults=20";
-        }
+        //get the search parameter from the intent
+        mSearchParam = getIntent().getStringExtra("searchParam");
         // refrence to the listView to show the books
         mBookListView = (ListView)findViewById(R.id.results_list);
 
@@ -62,11 +64,15 @@ public class ResultsActivity extends AppCompatActivity implements LoaderManager.
 
     @Override
     public Loader<List<Book>> onCreateLoader(int i, Bundle bundle) {
-        if(i == 0 && mUrl != null){
-            return new BooksLoader(ResultsActivity.this, mUrl);
-        }else{
-            return null;
-        }
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String maxBooks = sharedPrefs.getString(getString(R.string.settings_book_limit_key), getString(R.string.settings_book_limit_default));
+        Uri baseUri = Uri.parse(API_URL);
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+        uriBuilder.appendQueryParameter("q", mSearchParam);
+        uriBuilder.appendQueryParameter("maxResults", maxBooks);
+        Log.d("uri", "onCreateLoader: " + uriBuilder.toString());
+        return new BooksLoader(ResultsActivity.this, uriBuilder.toString());
+
     }
 
     @Override

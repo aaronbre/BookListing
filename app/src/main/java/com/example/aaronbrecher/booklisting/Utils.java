@@ -23,6 +23,7 @@ import java.util.List;
 public class Utils {
 
     private static final String TAG = Utils.class.getSimpleName();
+    private static final String NOT_FOUND = "Not Found";
 
     public Utils() {
     }
@@ -130,10 +131,10 @@ public class Utils {
         }
         try {
             //creat variables to set up the Book object
-            String title;
-            String author;
-            String category;
-            String description;
+            String title = NOT_FOUND;
+            String author = NOT_FOUND;
+            String category = NOT_FOUND;
+            String description = NOT_FOUND;
             Double price = null;
             String image;
             //traverse the JSON and get all the elements to add to Book object
@@ -145,16 +146,16 @@ public class Utils {
                 JSONObject bookDetails = currentBook.getJSONObject("volumeInfo");
                 title = bookDetails.getString("title");
                 //truncates multiple authors to the first one
-                author = bookDetails.getJSONArray("authors").getString(0);
+                if(bookDetails.has("authors")) author = bookDetails.getJSONArray("authors").getString(0);
                 //get the category if no category set to fiction (won't work for everything just a start)
-                description = bookDetails.getString("description");
+                if (bookDetails.has("description")) description = bookDetails.getString("description");
                 category = bookDetails.has("categories") ? bookDetails.getJSONArray("categories").getString(0) : "Fiction";
                 //get an image from the object if no image set to null
                 image = bookDetails.has("imageLinks") ? bookDetails.getJSONObject("imageLinks").getString("smallThumbnail") : null;
                 //check if the object has sale info if so set price to the listPrice null if no SalesInfo
                 if(currentBook.has("saleInfo")){
                     JSONObject saleDetails = currentBook.getJSONObject("saleInfo");
-                    price = saleDetails.has("listPrice") ? saleDetails.getJSONObject("listPrice").getDouble("amount") : null;
+                    if (saleDetails.has("listPrice")) price = saleDetails.getJSONObject("listPrice").getDouble("amount");
                 }
                 books.add(new Book(title,author, description, category, price, image));
             }
